@@ -28,7 +28,19 @@ docker compose up -d
 - PostgreSQL (ポート: 54321)
 - Electric SQL Sync Service (ポート: 3000)
 
-### 2. データベースの状態確認
+### 2. データベースマイグレーション
+
+データベースにテーブルを作成します：
+
+```bash
+docker exec -i electric_quickstart-postgres-1 psql -U postgres -d electric < migrations/001_create_todos_table.sql
+```
+
+マイグレーションが成功すると、以下のテーブルとサンプルデータが作成されます：
+- `todos` テーブル（id, task, completed, created_at）
+- 3件のサンプルTodo
+
+### 3. データベースの状態確認
 
 ```bash
 # データベースに接続
@@ -41,7 +53,7 @@ docker exec -it electric_quickstart-postgres-1 psql -U postgres -d electric
 SELECT * FROM todos;
 ```
 
-### 3. Reactアプリの起動
+### 4. Reactアプリの起動
 
 ```bash
 cd todo-app
@@ -100,6 +112,8 @@ docker exec electric_quickstart-postgres-1 psql -U postgres -d electric -c \
 ```
 electric-react-todo-app/
 ├── docker-compose.yaml       # Docker設定
+├── migrations/               # データベースマイグレーション
+│   └── 001_create_todos_table.sql
 ├── todo-app/                 # Reactアプリケーション
 │   ├── src/
 │   │   ├── App.tsx          # メインコンポーネント
