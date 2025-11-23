@@ -45,7 +45,7 @@ SELECT * FROM todos;
 
 ```bash
 cd todo-app
-npm run dev
+pnpm run dev
 ```
 
 ブラウザで `http://localhost:5173` を開きます。
